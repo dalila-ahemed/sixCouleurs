@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -59,6 +60,7 @@ public class Fenetre extends JFrame implements ActionListener{
     	//Création de la fenêtre principale
     	this.longueur=longueur;
     	this.largeur = largeur;
+    	this.grille=grille;
     	this.joueurs = joueurs;
     	this.itJoueur = joueurs.listIterator();
     	this.joueur  = itJoueur.next(); // On pointe sur le premier joueur
@@ -82,9 +84,9 @@ public class Fenetre extends JFrame implements ActionListener{
     }
     
     
-    public static Grille getGrille() {
+   /* public static Grille getGrille() {
 		return grille;
-	}
+	}*/
      
     
     public void fenetrePrincipale(){
@@ -177,7 +179,7 @@ public class Fenetre extends JFrame implements ActionListener{
 		contentGrille.removeAll();
 		for(int i=0; i<this.largeur;i++){
         	for(int j=0;j<this.longueur;j++){  	
-        		char couleur = Character.toLowerCase(getGrille().getcases()[i][j]);
+        		char couleur = Character.toLowerCase(this.grille.getcases()[i][j]);
     			bouton = new JButton();
     			bouton.setText(nomJoueur(i,j));
         		switch(couleur){
@@ -225,19 +227,19 @@ public class Fenetre extends JFrame implements ActionListener{
 			Joueur j = it.next();
 			
 			totalScore = totalScore + j.getScore();
-			if(j.getScore()>=((int)(getGrille().getlargeur()*getGrille().getlongueur()/2)+1)){
+			if(j.getScore()>=((int)(grille.getlargeur()*grille.getlongueur()/2)+1)){
 				return true;
 			}
 		}
 		
-		if(totalScore >= getGrille().getlargeur()*getGrille().getlongueur()){// Plus de cases à jouer
+		if(totalScore >= grille.getlargeur()*grille.getlongueur()){// Plus de cases à jouer
 			return true;
 		}
 		return false;
 	}
 	
 	 String afficheScore (){
-		Joueur j = new Joueur(0,getGrille());
+		Joueur j = new Joueur(0,grille);
 		String txtScore="Scores : ";
 		
 		Iterator<Joueur> it = this.joueurs.iterator();
@@ -286,8 +288,8 @@ public class Fenetre extends JFrame implements ActionListener{
 	
 	private static Joueur leGagnant(LinkedList<Joueur> listejoueurs){
 
-		Joueur j = new Joueur(0,getGrille());
-		Joueur jGagnant= new Joueur(0,getGrille());
+		Joueur j = new Joueur(0,grille);
+		Joueur jGagnant= new Joueur(0,grille);
 		Iterator<Joueur> it = listejoueurs.iterator();
 		while(it.hasNext()){
 			j = it.next();
@@ -305,34 +307,34 @@ public class Fenetre extends JFrame implements ActionListener{
 			
 			// ---------le joueur qui a cliqué joue ---------------------------------
 			joueur.setSaisie(clic.charAt(0));
-			if (joueur.saisieValide(joueur.getSaisie())== false){ // s'il a cliqué sur une mauvais couleur
+			if (joueur.saisieValide(joueur.getSaisie())== false){ // s'il a cliqué sur une mauvaise couleur
 				char couleur = joueur.getSaisie();
 				clr = couleurNonJouable(couleur);
 				afficheMessage(joueur.getNom()+" tu ne peux pas jouer la couleur " + clr );
 				}
 			else{												   // S'il a cliqué sur la bonne couleur
-				getGrille().getcouleursbloquees().set(joueur.getNumero()-1, joueur.getSaisie()); // Recupère la liste des couleurs bloquées
+				grille.getcouleursbloquees().set(joueur.getNumero()-1, joueur.getSaisie()); // Recupère la liste des couleurs bloquées
 				joueur.setCouleurControlee(joueur.getSaisie()); 						
 				joueur.modifierGrille();													// Mise à jour de la grille													
 				creationGrille();															// affichage de la nouvelle grille
 				if(itJoueur.hasNext()== false){// Si c'est le dernier passe au premier
-					itJoueur = joueurs.listIterator(0);
+					itJoueur = joueurs.iterator();
 				}
 				joueur = itJoueur.next();
 				afficheMessage("");
 				
-				// -------- Est-ce que ce n'est pas la fin de la partie ? ---------------------
-				if (!finPartie()){ //Oui ce n'est pas la fin de la partie
+				// -------- Est-ce la fin de la partie  ? ---------------------
+				if (!finPartie()){ //Non ce n'est pas la fin de la partie
 					
-					// ----------- Est-ce qu'il ne sont pas tous bloqués ? --------------------
-					if (!tousBloques()){  // Oui ils ne sont pas tous bloqués -----------------
+					// ----------- Les joueurs sont-ils tous bloqués ? --------------------
+					if (!tousBloques()){  // Non au moins l'un d'entre eux peux jouer -----------------
 						
 						//------ Recherche de joueur bloqué --------------------------
 						while(joueur.blocage()){
 							s = joueur.getNom()+" passe la main. ";
 							afficheMessage(s);
 							if(!itJoueur.hasNext()){
-								itJoueur = joueurs.listIterator(0);
+								itJoueur = joueurs.iterator();
 								}
 							joueur = itJoueur.next();
 							}
@@ -340,11 +342,14 @@ public class Fenetre extends JFrame implements ActionListener{
 						}
 					else{
 						afficheMessage(" Fin de la partie. Le gagnant est : "+leGagnant(joueurs).getNom()+ " avec un score de : "+leGagnant(joueurs).getScore()+" pts.");
-						
+
+						JOptionPane.showMessageDialog(this, "Fin de la partie","Fin de partie",JOptionPane.WARNING_MESSAGE);
 					}
 					}
 				else{
 					afficheMessage(" Fin de la partie. Le gagnant est : "+leGagnant(joueurs).getNom()+ " avec un score de : "+leGagnant(joueurs).getScore()+" pts.");
+					
+					JOptionPane.showMessageDialog(this, "Fin de la partie","Fin de partie",JOptionPane.WARNING_MESSAGE);
 					}
 				}
 		}

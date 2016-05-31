@@ -162,7 +162,7 @@ public class Joueur {
 		ArrayList<Character> couleursJouables = new ArrayList<Character>();
 		caseDesignee();//On enregistre les cases de la couleur tapée par le joueur dans la liste caseDesignee
 				
-		Iterator<Cellule> itc = caseDesignee.listIterator();
+		Iterator<Cellule> itc = caseDesignee.iterator();
 		while(itc.hasNext()){
 			recherche(itc.next(),"");
 		}		
@@ -191,21 +191,21 @@ public class Joueur {
 		casesControlees.add(c); 
 		
 		// ------------ Mettre à jour les cases adjacentes vers le bas --------------------------------------
-		if ((direction != "haut") && (c.getligne()< grille.getlargeur()-1)){
+		if ((direction != "haut") && (c.getligne()< grille.getlargeur()-1)){ //Si l'on ne se trouve pas à la dernière ligne : on va vers le bas et on interdit de remonter  
 		recherche(new Cellule(c.getligne()+1, c.getcolonne(), grille), "bas");
 		 		}
 
 		// -------------  Mettre a jour les cases adjacentes vers le haut ------------------------------------
-		if((direction!= "bas") && (c.getligne() >= 1)){			
+		if((direction!= "bas") && (c.getligne() >= 1)){	// Si l'on ne se trouve pas sur la première ligne : on monte et on interdit de redescendre		
 		recherche(new Cellule ( c.getligne()-1, c.getcolonne(),grille),"haut");
 				}
 		// -------------  Mettre a jour les cases adjacentes vers la droite ----------------------------------
-		if((direction!= "gauche") && (c.getcolonne() < grille.getlongueur()-1)) {
+		if((direction!= "gauche") && (c.getcolonne() < grille.getlongueur()-1)) {// Si l'on ne se trouve pas sur la dernière colonne : on va à droite et on interdit d'aller vers la gauche 
 		recherche( new Cellule(c.getligne(), c.getcolonne()+1,grille),"droite");
 				}
 
 		// ------------ Mettre à jour les cases adjacentes vers la gauche ------------------------------------
-		if((direction!= "droite") && (c.getcolonne() >= 1)){ 		
+		if((direction!= "droite") && (c.getcolonne() >= 1)){ // Si l'on ne se trouve pas sur la première colonne : on va à gauche et on interdit d'aller à roite 		
 				recherche(new Cellule(c.getligne(), c.getcolonne()-1,grille),"gauche");
 				}
 		 	}
@@ -226,17 +226,6 @@ public class Joueur {
 		
 	}
 	
-	/*public boolean contient(HashSet<Cellule> l,Cellule c){
-		Iterator<Cellule> it = l.iterator();
-		while(it.hasNext()){
-			Cellule copie = it.next();
-			if(c.getligne() == copie.getligne() && c.getcolonne() == copie.getcolonne())
-			{
-				return true;
-			}
-		}
-		return false;
-	}*/
 	
 	public void jouableBis(){
 		
