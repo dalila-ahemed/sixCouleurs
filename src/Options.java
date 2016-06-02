@@ -36,7 +36,7 @@ private void init(){
 	panJoueur.setSize(new Dimension(220,60));
 	panJoueur.setBorder(BorderFactory.createTitledBorder("Nombre de participants"));
 	JLabel nombreJoueur = new JLabel("Nombre de joueurs"); 
-	String [] combo1 = {"2","3","4"};
+	String [] combo1 = {"1","2","3","4"};
 	JComboBox<String> joueurs = new JComboBox<String>(combo1);
 	panJoueur.add(nombreJoueur);
 	panJoueur.add(joueurs);
@@ -49,13 +49,19 @@ private void init(){
 	JLabel joueur2 = new JLabel ("Joueur 2 :");
 	JLabel joueur3 = new JLabel ("Joueur 3 :");
 	JLabel joueur4 = new JLabel ("Joueur 4 :");
+	
 	JTextField j1 = new JTextField();
 	j1.setPreferredSize(new Dimension(new Dimension(100,25)));
+	
 	JTextField j2 = new JTextField();
 	j2.setPreferredSize(new Dimension(new Dimension(100,25)));
+	j2.setText("IA");
+	j2.setEnabled(false);
+	
 	JTextField j3 = new JTextField();
 	j3.setPreferredSize(new Dimension(new Dimension(100,25)));
 	j3.setEnabled(false);
+	
 	JTextField j4 = new JTextField();
 	j4.setEnabled(false);
 	j4.setPreferredSize(new Dimension(new Dimension(100,25)));
@@ -72,21 +78,36 @@ private void init(){
 	joueurs.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent arg0) {
         	switch((String)joueurs.getSelectedItem()){
+        	case "1":
+        		j1.setEnabled(true);
+        		j2.setEnabled(false);
+        		j3.setEnabled(false);
+        		j4.setEnabled(false);
+        		break;
         	case "2":
         		j1.setEnabled(true);
         		j2.setEnabled(true);
+        		if(j2.getText().equals("IA")){
+        			j2.setText(null);
+        		}
         		j3.setEnabled(false);
         		j4.setEnabled(false);
         		break;
         	case "3":
         		j1.setEnabled(true);
         		j2.setEnabled(true);
+        		if(j2.getText().equals("IA")){
+        			j2.setText(null);
+        		}
         		j3.setEnabled(true);
         		j4.setEnabled(false);
         		break;
         	case "4":
         		j1.setEnabled(true);
         		j2.setEnabled(true);
+        		if(j2.getText().equals("IA")){
+        			j2.setText(null);
+        		}
         		j3.setEnabled(true);
         		j4.setEnabled(true);
         	}

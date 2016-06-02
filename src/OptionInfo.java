@@ -46,6 +46,8 @@ public class OptionInfo{
 public boolean  validationFormulaire(){
 	boolean valide = false;
 	switch(this.nombre){
+	case "1":
+		valide = !((this.j1.equals("")));
 	case "2" :
 		valide =!((this.j1.equals(""))|| (this.j2.equals("")));
 		break;

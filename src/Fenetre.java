@@ -299,12 +299,14 @@ public class Fenetre extends JFrame implements ActionListener{
 		}
 		return jGagnant;
 	}
-	
+	/*
+	 * Se déclenche quand on clique sur une couleur jouable
+	 * 
+	 */
 	public void actionPerformed(ActionEvent evt) {
 			String s = "";
 			String clr ="";
-			clic = evt.getActionCommand();
-			
+			clic = joueur.gestionClic(evt);
 			// ---------le joueur qui a cliqué joue ---------------------------------
 			joueur.setSaisie(clic.charAt(0));
 			if (joueur.saisieValide(joueur.getSaisie())== false){ // s'il a cliqué sur une mauvaise couleur
@@ -321,6 +323,9 @@ public class Fenetre extends JFrame implements ActionListener{
 					itJoueur = joueurs.iterator();
 				}
 				joueur = itJoueur.next();
+				
+				
+				// Si le joueur est virtuel il faut relancer la fonction action performed avec evt = null
 				afficheMessage("");
 				
 				// -------- Est-ce la fin de la partie  ? ---------------------
@@ -338,18 +343,25 @@ public class Fenetre extends JFrame implements ActionListener{
 								}
 							joueur = itJoueur.next();
 							}
-						afficheMessage(s + joueur.getNom()+" à toi de jouer ");
+						
+						if(joueur.getVirtuel()){
+							actionPerformed(evt);
+							}
+						else{
+							afficheMessage(s + joueur.getNom()+" à toi de jouer ");
+							}
+						
 						}
 					else{
 						afficheMessage(" Fin de la partie. Le gagnant est : "+leGagnant(joueurs).getNom()+ " avec un score de : "+leGagnant(joueurs).getScore()+" pts.");
 
-						JOptionPane.showMessageDialog(this, "Fin de la partie","Fin de partie",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(this, "Fin de la partie. Le gagnant est : "+leGagnant(joueurs).getNom()+ " avec un score de : "+leGagnant(joueurs).getScore()+" pts.","Fin de partie",JOptionPane.WARNING_MESSAGE);
 					}
 					}
 				else{
 					afficheMessage(" Fin de la partie. Le gagnant est : "+leGagnant(joueurs).getNom()+ " avec un score de : "+leGagnant(joueurs).getScore()+" pts.");
 					
-					JOptionPane.showMessageDialog(this, "Fin de la partie","Fin de partie",JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Fin de la partie. Le gagnant est : "+leGagnant(joueurs).getNom()+ " avec un score de : "+leGagnant(joueurs).getScore()+" pts.","Fin de partie",JOptionPane.WARNING_MESSAGE);
 					}
 				}
 		}

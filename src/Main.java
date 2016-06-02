@@ -64,12 +64,29 @@ public class Main extends JFrame implements ActionListener  {
 							grille.initGrille();
 							compteurBlocage=0;
 							joueurs = new LinkedList<Joueur>();
-							for(int i=1;i<= dialogue.infos.getNombre();i++){
-								Joueur J = new Joueur(i,grille);
-								joueurs.add(J);	
-								J.setNom(dialogue.infos.getNom(i));
-								}
-							Iterator<Joueur> J =  joueurs.listIterator();
+							// Si un seul joueur
+							
+							if(dialogue.infos.getNombre()==1){
+								Joueur J1 = new Joueur(1,grille);
+								J1.setVirtuel(false);//le 1er joueur est réel
+								joueurs.add(J1);
+								J1.setNom(dialogue.infos.getNom(1));
+								
+								IA J2 = new IA(2,grille);
+								J2.setVirtuel(true);// le second joueur est une IA
+								joueurs.add(J2);
+								J2.setNom("IA");
+								
+							}
+							else{
+								for(int i=1;i<= dialogue.infos.getNombre();i++){
+									Joueur J = new Joueur(i,grille);
+									joueurs.add(J);	
+									J.setNom(dialogue.infos.getNom(i));
+									}
+							}
+							
+							Iterator<Joueur> J =  joueurs.iterator();
 							while(J.hasNext()){
 								Joueur test = J.next();
 								if (test.blocage()){

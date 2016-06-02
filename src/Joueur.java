@@ -1,4 +1,5 @@
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -6,16 +7,17 @@ import java.util.Iterator;
 
 public class Joueur {
 //********************* Attributs ***************************
-	private char saisie;//lettre choisie par le joueur
-	private int score;
-	private int numero;
-	private String nom;
-	private HashSet<Cellule> casesJouables;
-	private HashSet<Cellule> casesControlees;// liste des cases controlees par un joueur
-	private ArrayList<Cellule> caseDesignee;//liste des cases jouables contenant la lettre jouee
-	private Grille grille;
-	private char couleurControlee;//couleur bloquée aux autres joueurs
-	private ArrayList<Character> couleursJouables; // couleurs des cases jouables pour le joueur
+	protected char saisie;//lettre choisie par le joueur
+	protected int score;
+	protected int numero;
+	protected String nom;
+	protected HashSet<Cellule> casesJouables;
+	protected HashSet<Cellule> casesControlees;// liste des cases controlees par un joueur
+	protected ArrayList<Cellule> caseDesignee;//liste des cases jouables contenant la lettre jouee
+	protected Grille grille;
+	protected char couleurControlee;//couleur bloquée aux autres joueurs
+	protected ArrayList<Character> couleursJouables; // couleurs des cases jouables pour le joueur
+	protected boolean virtuel;
 
 
 	//***************Constructeur*********************
@@ -91,6 +93,10 @@ public class Joueur {
 	public String getNom(){
 		return nom;
 	}
+	
+	public boolean getVirtuel(){
+		return virtuel;
+	}
 
 	//*********************** Setter ***********************************
 	
@@ -102,6 +108,10 @@ public class Joueur {
 	}
 	public void setNom(String s){
 		this.nom = s;
+	}
+	
+	public void setVirtuel(boolean b){
+		this.virtuel = b;
 	}
 	
 	//**********************  Méthodes **********************************
@@ -261,6 +271,10 @@ public class Joueur {
 			}
 		}
 	}	
+	
+	public String gestionClic(ActionEvent e){
+		return e.getActionCommand();
+	}
 		
 	public int calcul_score(){
 		int score = getScore();
