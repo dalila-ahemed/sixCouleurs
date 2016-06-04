@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -62,7 +63,7 @@ public class Fenetre extends JFrame implements ActionListener{
     	this.largeur = largeur;
     	this.grille=grille;
     	this.joueurs = joueurs;
-    	this.itJoueur = joueurs.listIterator();
+    	this.itJoueur = joueurs.iterator();
     	this.joueur  = itJoueur.next(); // On pointe sur le premier joueur
     	this.message = new JLabel();
     	this.setTitle("Jeu des 6 couleurs");
@@ -83,12 +84,6 @@ public class Fenetre extends JFrame implements ActionListener{
  
     }
     
-    
-   /* public static Grille getGrille() {
-		return grille;
-	}*/
-     
-    
     public void fenetrePrincipale(){
     	fenetreCentrale();
     	fenetreCouleurs();
@@ -96,8 +91,7 @@ public class Fenetre extends JFrame implements ActionListener{
     	afficheMessage(joueur.getNom()+" à toi de jouer");
     }
     public void fenetreCentrale(){
-    	
-    	//contentGrille.setPreferredSize(new Dimension(400,400));
+ 
     	creationGrille();
     	cadre.add(contentGrille, BorderLayout.CENTER);
   
@@ -160,7 +154,7 @@ public class Fenetre extends JFrame implements ActionListener{
     }
     public String nomJoueur(int ligne, int colonne){
     	String nom = "";
-    	Iterator<Joueur> it = getJoueurs().listIterator();
+    	Iterator<Joueur> it = getJoueurs().iterator();
     	
     	while(it.hasNext()){
     		Joueur j = it.next();
@@ -345,7 +339,7 @@ public class Fenetre extends JFrame implements ActionListener{
 							}
 						
 						if(joueur.getVirtuel()){
-							actionPerformed(evt);
+							actionPerformed(evt); // Si le joueur est virtuel on rappelle la fonction action performed
 							}
 						else{
 							afficheMessage(s + joueur.getNom()+" à toi de jouer ");
@@ -354,14 +348,14 @@ public class Fenetre extends JFrame implements ActionListener{
 						}
 					else{
 						afficheMessage(" Fin de la partie. Le gagnant est : "+leGagnant(joueurs).getNom()+ " avec un score de : "+leGagnant(joueurs).getScore()+" pts.");
-
-						JOptionPane.showMessageDialog(this, "Fin de la partie. Le gagnant est : "+leGagnant(joueurs).getNom()+ " avec un score de : "+leGagnant(joueurs).getScore()+" pts.","Fin de partie",JOptionPane.WARNING_MESSAGE);
+						ImageIcon img = new ImageIcon("vicoire.jpg");
+						JOptionPane.showMessageDialog(this, "Fin de la partie. Le gagnant est : "+leGagnant(joueurs).getNom()+ " avec un score de : "+leGagnant(joueurs).getScore()+" pts.","Fin de partie",JOptionPane.WARNING_MESSAGE,img);
 					}
 					}
 				else{
 					afficheMessage(" Fin de la partie. Le gagnant est : "+leGagnant(joueurs).getNom()+ " avec un score de : "+leGagnant(joueurs).getScore()+" pts.");
-					
-					JOptionPane.showMessageDialog(this, "Fin de la partie. Le gagnant est : "+leGagnant(joueurs).getNom()+ " avec un score de : "+leGagnant(joueurs).getScore()+" pts.","Fin de partie",JOptionPane.WARNING_MESSAGE);
+					ImageIcon img = new ImageIcon("vicoire.jpg");
+					JOptionPane.showMessageDialog(this, "Fin de la partie. Le gagnant est : "+leGagnant(joueurs).getNom()+ " avec un score de : "+leGagnant(joueurs).getScore()+" pts.","Fin de partie",JOptionPane.WARNING_MESSAGE,img);
 					}
 				}
 		}

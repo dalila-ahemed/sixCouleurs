@@ -116,7 +116,7 @@ public class Joueur {
 	
 	//**********************  Méthodes **********************************
 	/*------------------------------------------------------------------------------------------------
-	 * Cette fonction permet de vérifier que la couleur jouée existe, est jouable et n'est pas bloquée
+	 * Cette fonction permet de vérifier que la couleur jouée est jouable et n'est pas bloquée
 	 *------------------------------------------------------------------------------------------------ */
 	
 	public boolean saisieValide(char entree){
@@ -178,7 +178,7 @@ public class Joueur {
 		}		
 					
        majuscule();
-       this.score=calcul_score();
+       this.score=calculScore();
 		Iterator<Cellule> it = casesJouables.iterator();
 		while(it.hasNext()){
 			Cellule t = it.next();
@@ -197,6 +197,7 @@ public class Joueur {
  * Le paramètre est la case initiale : parametre ligne et colonne
  ---------------------------------------------------------------------*/
 	public void recherche( Cellule c, String direction){
+		try{
 		if(Character.toLowerCase(c.getcouleur())== Character.toLowerCase(this.couleurControlee )){
 		casesControlees.add(c); 
 		
@@ -219,6 +220,10 @@ public class Joueur {
 				recherche(new Cellule(c.getligne(), c.getcolonne()-1,grille),"gauche");
 				}
 		 	}
+		}
+		catch(java.lang.StackOverflowError e){
+			
+		}
 	}
 	
 	/* ----------------------------------------------------------
@@ -276,7 +281,7 @@ public class Joueur {
 		return e.getActionCommand();
 	}
 		
-	public int calcul_score(){
+	public int calculScore(){
 		int score = getScore();
 		HashSet<Cellule> controle=getCasesControlees();
 		score = controle.size();

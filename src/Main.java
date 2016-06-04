@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.util.LinkedList;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
@@ -28,7 +27,7 @@ public class Main extends JFrame implements ActionListener  {
 	this.setSize(800,800);
 	this.setResizable(false);	
 	boutons = new JPanel();
-	boutons.setPreferredSize(new Dimension(800,100));
+	//boutons.setPreferredSize(new Dimension(800,100));
 	cadre = new JPanel();
 	this.setLocationRelativeTo(null); 
 	cadre.setLayout(new BorderLayout());
